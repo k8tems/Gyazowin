@@ -56,10 +56,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	// カレントディレクトリを exe と同じ場所に設定
 	SetCurrentDirectory(szThisPath);
 
-	// 引数にファイルが指定されていたら
-	if ( 2 == __argc )
+	if ( 2 != __argc )
 	{
-		// 指定ファイルに画像と矩形を書き込む
+		// 引数にファイルが指定されてなければ強制終了
+		return FALSE;
 	}
 
 	// ウィンドウクラスを登録
