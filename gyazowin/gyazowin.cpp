@@ -584,7 +584,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			GetTempPath(MAX_PATH, tmpDir);
 			GetTempFileName(tmpDir, _T("gya"), 0, tmpFile);
 			
-			if (!savePNG(tmpFile, newBMP)) {
+			if (!savePNG(szOutputFile, newBMP)) {
 				// PNG•Û‘¶Ž¸”s...
 				MessageBox(hWnd, _T("Cannot save png image"), szTitle, 
 					MB_OK | MB_ICONERROR);
