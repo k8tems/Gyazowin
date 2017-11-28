@@ -334,6 +334,10 @@ BOOL savePNG(LPCTSTR fileName, HBITMAP newBMP)
 	return res;
 }
 
+BOOL saveRect(LPCTSTR fileName, RECT clipRect) {
+	//矩形座標を出力ファイルにアペンドする
+}
+
 // レイヤーウィンドウプロシージャ
 LRESULT CALLBACK LayerWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -528,6 +532,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				MessageBox(hWnd, _T("Cannot save png image"), szTitle, 
 					MB_OK | MB_ICONERROR);
 			}
+
+			saveRect(szOutputFile, clipRect);
 
 			DeleteDC(newDC);
 			DeleteObject(newBMP);
