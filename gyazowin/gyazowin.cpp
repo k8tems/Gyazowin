@@ -56,11 +56,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	// カレントディレクトリを exe と同じ場所に設定
 	SetCurrentDirectory(szThisPath);
 
+	// 引数のファイル指定は強制
 	if ( 2 != __argc )
-	{
-		// 引数にファイルが指定されてなければ強制終了
 		return FALSE;
-	}
 
 	// ウィンドウクラスを登録
 	MyRegisterClass(hInstance);
