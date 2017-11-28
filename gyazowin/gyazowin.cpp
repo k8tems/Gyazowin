@@ -579,20 +579,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 			*/
 			
-			// テンポラリファイル名を決定
-			TCHAR tmpDir[MAX_PATH], tmpFile[MAX_PATH];
-			GetTempPath(MAX_PATH, tmpDir);
-			GetTempFileName(tmpDir, _T("gya"), 0, tmpFile);
-			
 			if (!savePNG(szOutputFile, newBMP)) {
 				// PNG保存失敗...
 				MessageBox(hWnd, _T("Cannot save png image"), szTitle, 
 					MB_OK | MB_ICONERROR);
 			}
 
-			// 後始末
-			DeleteFile(tmpFile);
-			
 			DeleteDC(newDC);
 			DeleteObject(newBMP);
 
