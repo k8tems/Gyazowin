@@ -23,7 +23,6 @@ LRESULT CALLBACK	LayerWndProc(HWND, UINT, WPARAM, LPARAM);
 
 int					GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
 
-BOOL				isPng(LPCTSTR fileName);
 VOID				drawRubberband(HDC hdc, LPRECT newRect, BOOL erase);
 VOID				execUrl(const char* str);
 VOID				setClipBoardText(const char* str);
@@ -80,29 +79,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 
 	return (int) msg.wParam;
-}
-
-// ヘッダを見て PNG 画像かどうか(一応)チェック
-BOOL isPng(LPCTSTR fileName)
-{
-	unsigned char pngHead[] = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-	unsigned char readHead[8];
-	
-	FILE *fp = NULL;
-	
-	if (0 != _tfopen_s(&fp, fileName, _T("rb")) ||
-		8 != fread(readHead, 1, 8, fp)) {
-		// ファイルが読めない	
-		return FALSE;
-	}
-	fclose(fp);
-	
-	// compare
-	for(unsigned int i=0;i<8;i++)
-		if(pngHead[i] != readHead[i]) return FALSE;
-
-	return TRUE;
-
 }
 
 // ウィンドウクラスを登録
