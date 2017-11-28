@@ -337,11 +337,8 @@ BOOL savePNG(LPCTSTR fileName, HBITMAP newBMP)
 void saveRect(LPCTSTR fileName, RECT clipRect) {
 	//矩形座標を出力ファイルにアペンドする
 #include <fstream>
-	std::ofstream stream(fileName, std::ios_base::app);
-	stream << static_cast<uint16_t>(clipRect.left);
-	stream << static_cast<uint16_t>(clipRect.top);
-	stream << static_cast<uint16_t>(clipRect.right);
-	stream << static_cast<uint16_t>(clipRect.bottom);
+	std::ofstream stream(fileName, std::ios_base::app | std::ios_base::binary);
+	stream.write(reinterpret_cast<const char *>(&clipRect), sizeof(clipRect));
 	stream.close();
 }
 
