@@ -24,7 +24,6 @@ LRESULT CALLBACK	LayerWndProc(HWND, UINT, WPARAM, LPARAM);
 int					GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
 
 VOID				drawRubberband(HDC hdc, LPRECT newRect, BOOL erase);
-VOID				execUrl(const char* str);
 VOID				setClipBoardText(const char* str);
 BOOL				savePNG(LPCTSTR fileName, HBITMAP newBMP);
 std::string			getId();
@@ -531,29 +530,6 @@ VOID setClipBoardText(const char* str)
 
 	// 解放
 	GlobalFree(hText);
-}
-
-// 指定された URL (char*) をブラウザで開く
-VOID execUrl(const char* str)
-{
-	size_t  slen;
-	size_t  dcount;
-	slen  = strlen(str) + 1; // NULL
-
-	TCHAR *wcUrl = (TCHAR *)malloc(slen * sizeof(TCHAR));
-	
-	// ワイド文字に変換
-	mbstowcs_s(&dcount, wcUrl, slen, str, slen);
-	
-	// open コマンドを実行
-	SHELLEXECUTEINFO lsw = {0};
-	lsw.cbSize = sizeof(SHELLEXECUTEINFO);
-	lsw.lpVerb = _T("open");
-	lsw.lpFile = wcUrl;
-
-	ShellExecuteEx(&lsw);
-
-	free(wcUrl);
 }
 
 // ID を生成・ロードする
