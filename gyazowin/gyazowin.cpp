@@ -195,10 +195,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		hWnd, NULL, hInstance, NULL);
 
     SetLayeredWindowAttributes(hLayerWnd, RGB(255, 0, 0), 100, LWA_COLORKEY|LWA_ALPHA);
-
-	
-
-
 	
 	return TRUE;
 }
@@ -272,49 +268,8 @@ VOID drawRubberband(HDC hdc, LPRECT newRect, BOOL erase)
 	}
 	MoveWindow(hLayerWnd,  clipRect.left, clipRect.top, 
 			clipRect.right-  clipRect.left + 1, clipRect.bottom - clipRect.top + 1,true);
-
 	
 	return;
-
-/* rakusai 2009/11/2
-
-	// XOR で描画
-	int hPreRop = SetROP2(hdc, R2_XORPEN);
-
-	// 点線
-	HPEN hPen = CreatePen(PS_DOT , 1, 0);
-	SelectObject(hdc, hPen);
-	SelectObject(hdc, GetStockObject(NULL_BRUSH));
-
-	if(!firstDraw) {
-		// 前のを消す
-		Rectangle(hdc, lastRect.left, lastRect.top, 
-			lastRect.right + 1, lastRect.bottom + 1);
-	} else {
-		firstDraw = FALSE;
-	}
-	
-	// 新しい座標を記憶
-	lastRect = *newRect;
-	
-	
-
-
-	if (!erase) {
-
-		// 枠を描画
-		Rectangle(hdc, lastRect.left, lastRect.top, 
-			lastRect.right + 1, lastRect.bottom + 1);
-
-	}
-
-
-	// 後処理
-	SetROP2(hdc, hPreRop);
-	DeleteObject(hPen);
-
-*/
-
 }
 
 // PNG 形式に変換
@@ -567,17 +522,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			
 			// ウィンドウを隠す!
 			ShowWindow(hWnd, SW_HIDE);
-			/*
-			// 画像をクリップボードにコピー
-			if ( OpenClipboard(hWnd) ) {
-				// 消去
-				EmptyClipboard();
-				// セット
-				SetClipboardData(CF_BITMAP, newBMP);
-				// 閉じる
-				CloseClipboard();
-			}
-			*/
 			
 			if (!savePNG(szOutputFile, newBMP)) {
 				// PNG保存失敗...
