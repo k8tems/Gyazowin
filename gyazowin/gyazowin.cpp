@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "gyazowin.h"
+#include <fstream>
 
 // グローバル変数:
 HINSTANCE hInst;							// 現在のインターフェイス
@@ -336,10 +337,14 @@ BOOL savePNG(LPCTSTR fileName, HBITMAP newBMP)
 
 void saveRect(LPCTSTR fileName, RECT clipRect) {
 	//矩形座標を出力ファイルにアペンドする
-#include <fstream>
-	std::ofstream stream(fileName, std::ios_base::app | std::ios_base::binary);
-	stream.write(reinterpret_cast<const char *>(&clipRect), sizeof(clipRect));
-	stream.close();
+	uint16_t outRect[4];
+	outRect[0] = clipRect.left;
+	outRect[1] = clipRect.top;
+	outRect[2] = clipRect.right;
+	outRect[3] = clipRect.bottom;
+	std::ofstream stream(fileName, std::ios_base::binary | std::ios_base::app);
+	stream.write(reinterpret_cast<const char *>(&outRect), sizeof(outRect));
+ 	stream.close();
 }
 
 // レイヤーウィンドウプロシージャ
