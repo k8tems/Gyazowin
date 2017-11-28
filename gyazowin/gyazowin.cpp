@@ -334,8 +334,15 @@ BOOL savePNG(LPCTSTR fileName, HBITMAP newBMP)
 	return res;
 }
 
-BOOL saveRect(LPCTSTR fileName, RECT clipRect) {
+void saveRect(LPCTSTR fileName, RECT clipRect) {
 	//矩形座標を出力ファイルにアペンドする
+#include <fstream>
+	std::ofstream stream(fileName, std::ios_base::app);
+	stream << static_cast<uint16_t>(clipRect.left);
+	stream << static_cast<uint16_t>(clipRect.top);
+	stream << static_cast<uint16_t>(clipRect.right);
+	stream << static_cast<uint16_t>(clipRect.bottom);
+	stream.close();
 }
 
 // レイヤーウィンドウプロシージャ
