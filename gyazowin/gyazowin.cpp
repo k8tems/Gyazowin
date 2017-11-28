@@ -12,6 +12,7 @@ TCHAR *szWindowClassL	= _T("GYAZOWINL");	// レイヤー ウィンドウ クラス名
 HWND hLayerWnd;
 
 int ofX, ofY;	// 画面オフセット
+TCHAR *szOutputFile = nullptr; // 画像と矩形を書き込むファイルのパス
 
 // プロトタイプ宣言
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -59,6 +60,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	// 引数のファイル指定は強制
 	if ( 2 != __argc )
 		return FALSE;
+
+	szOutputFile = __targv[4];
 
 	// ウィンドウクラスを登録
 	MyRegisterClass(hInstance);
