@@ -27,7 +27,6 @@ BOOL				isPng(LPCTSTR fileName);
 VOID				drawRubberband(HDC hdc, LPRECT newRect, BOOL erase);
 VOID				execUrl(const char* str);
 VOID				setClipBoardText(const char* str);
-BOOL				convertPNG(LPCTSTR destFile, LPCTSTR srcFile);
 BOOL				savePNG(LPCTSTR fileName, HBITMAP newBMP);
 std::string			getId();
 BOOL				saveId(const WCHAR* str);
@@ -271,37 +270,6 @@ VOID drawRubberband(HDC hdc, LPRECT newRect, BOOL erase)
 			clipRect.right-  clipRect.left + 1, clipRect.bottom - clipRect.top + 1,true);
 	
 	return;
-}
-
-// PNG 形式に変換
-BOOL convertPNG(LPCTSTR destFile, LPCTSTR srcFile)
-{
-	BOOL				res = FALSE;
-
-	GdiplusStartupInput	gdiplusStartupInput;
-	ULONG_PTR			gdiplusToken;
-	CLSID				clsidEncoder;
-
-	// GDI+ の初期化
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-
-	Image *b = new Image(srcFile, 0);
-
-	if (0 == b->GetLastStatus()) {
-		if (GetEncoderClsid(L"image/png", &clsidEncoder)) {
-			// save!
-			if (0 == b->Save(destFile, &clsidEncoder, 0) ) {
-					// 保存できた
-					res = TRUE;
-			}
-		}
-	}
-
-	// 後始末
-	delete b;
-	GdiplusShutdown(gdiplusToken);
-
-	return res;
 }
 
 // PNG 形式で保存 (GDI+ 使用)
