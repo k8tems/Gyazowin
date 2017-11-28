@@ -604,31 +604,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			GetTempPath(MAX_PATH, tmpDir);
 			GetTempFileName(tmpDir, _T("gya"), 0, tmpFile);
 			
-			if (savePNG(tmpFile, newBMP)) {
-
-				// うｐ
-				if (!uploadFile(hWnd, tmpFile)) {
-					// アップロードに失敗...
-					// エラーメッセージは既に表示されている
-
-					/*
-					TCHAR sysDir[MAX_PATH];
-					if (SUCCEEDED(StringCchCopy(sysDir, MAX_PATH, tmpFile)) &&
-						SUCCEEDED(StringCchCat(sysDir, MAX_PATH, _T(".png")))) {
-						
-						MoveFile(tmpFile, sysDir);
-						SHELLEXECUTEINFO lsw = {0};
-						
-						lsw.hwnd	= hWnd;
-						lsw.cbSize	= sizeof(SHELLEXECUTEINFO);
-						lsw.lpVerb	= _T("open");
-						lsw.lpFile	= sysDir;
-
-						ShellExecuteEx(&lsw);
-					}
-					*/
-				}
-			} else {
+			if (!savePNG(tmpFile, newBMP)) {
 				// PNG保存失敗...
 				MessageBox(hWnd, _T("Cannot save png image"), szTitle, 
 					MB_OK | MB_ICONERROR);
