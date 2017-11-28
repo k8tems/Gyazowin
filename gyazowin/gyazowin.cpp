@@ -61,7 +61,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	if ( 2 != __argc )
 		return FALSE;
 
-	szOutputFile = __targv[4];
+	szOutputFile = __targv[1];
 
 	// ウィンドウクラスを登録
 	MyRegisterClass(hInstance);
