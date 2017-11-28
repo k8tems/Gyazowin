@@ -24,7 +24,6 @@ LRESULT CALLBACK	LayerWndProc(HWND, UINT, WPARAM, LPARAM);
 int					GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
 
 VOID				drawRubberband(HDC hdc, LPRECT newRect, BOOL erase);
-VOID				setClipBoardText(const char* str);
 BOOL				savePNG(LPCTSTR fileName, HBITMAP newBMP);
 std::string			getId();
 BOOL				saveId(const WCHAR* str);
@@ -504,32 +503,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 	return 0;
-}
-
-// クリップボードに文字列をコピー
-VOID setClipBoardText(const char* str)
-{
-
-	HGLOBAL hText;
-	char    *pText;
-	size_t  slen;
-
-	slen  = strlen(str) + 1; // NULL
-
-	hText = GlobalAlloc(GMEM_DDESHARE | GMEM_MOVEABLE, slen * sizeof(TCHAR));
-
-	pText = (char *)GlobalLock(hText);
-	strncpy_s(pText, slen, str, slen);
-	GlobalUnlock(hText);
-	
-	// クリップボードを開く
-	OpenClipboard(NULL);
-	EmptyClipboard();
-	SetClipboardData(CF_TEXT, hText);
-	CloseClipboard();
-
-	// 解放
-	GlobalFree(hText);
 }
 
 // ID を生成・ロードする
